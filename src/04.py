@@ -81,9 +81,42 @@ def second_part(instance: InstanceType, day: str):
     with open(f"data/{instance.value}/{day}.txt") as f:
         lines = f.readlines()
 
-    pass
+    count = 0
+    matrix = []
+    for line in lines:
+        matrix.append([c for c in line.strip()])
+    for i in range(0, len(matrix)):
+        for j in range(0, len(matrix[0])):
+            count += int(is_x_mas_1(matrix, i,j))
+            count += int(is_x_mas_2(matrix, i,j))
+            count += int(is_x_mas_3(matrix, i,j))
+            count += int(is_x_mas_4(matrix, i,j))
+
+    return count
 
 
+def is_x_mas_1(matrix: list[list[str]], i:int, j:int) -> bool:
+    if i < 1 or j > (len(matrix[0]) - 2) or i > (len(matrix) - 2) or j < 1:
+        return False
+    return matrix[i][j] == "A" and matrix[i-1][j-1] == "S" and matrix[i+1][j+1] == "M" and matrix[i+1][j-1] == "M" and matrix[i-1][j+1] == "S"
+
+
+def is_x_mas_2(matrix: list[list[str]], i:int, j:int) -> bool:
+    if i < 1 or j > (len(matrix[0]) - 2) or i > (len(matrix) - 2) or j < 1:
+        return False
+    return matrix[i][j] == "A" and matrix[i-1][j-1] == "M" and matrix[i+1][j+1] == "S" and matrix[i+1][j-1] == "M" and matrix[i-1][j+1] == "S"
+
+
+def is_x_mas_3(matrix: list[list[str]], i:int, j:int) -> bool:
+    if i < 1 or j > (len(matrix[0]) - 2) or i > (len(matrix) - 2) or j < 1:
+        return False
+    return matrix[i][j] == "A" and matrix[i-1][j-1] == "M" and matrix[i+1][j+1] == "S" and matrix[i+1][j-1] == "S" and matrix[i-1][j+1] == "M"
+
+
+def is_x_mas_4(matrix: list[list[str]], i:int, j:int) -> bool:
+    if i < 1 or j > (len(matrix[0]) - 2) or i > (len(matrix) - 2) or j < 1:
+        return False
+    return matrix[i][j] == "A" and matrix[i-1][j-1] == "S" and matrix[i+1][j+1] == "M" and matrix[i+1][j-1] == "S" and matrix[i-1][j+1] == "M"
 
 
 def main(instance: InstanceType):
@@ -92,8 +125,8 @@ def main(instance: InstanceType):
     result = first_part(instance, day)
     print(result)
 
-    # result = second_part(instance, day)
-    # print(result)
+    result = second_part(instance, day)
+    print(result)
 
 
 if __name__ == "__main__":
