@@ -1,0 +1,21 @@
+# EditorConfig is awesome: https://EditorConfig.org
+
+# Top-most EditorConfig file
+root = true
+
+# Windows-style newlines with a newline ending every file, default charset and 4 spaces indentation
+[*]
+end_of_line = crlf
+trim_trailing_whitespace = true
+insert_final_newline = true
+charset = utf-8
+indent_style = space
+indent_size = 4
+
+# 2 spaces indentation for YAML only
+[*.yaml]
+indent_style = space
+indent_size = 2
+
+# ! If using VS Code, you should install the EditorConfig for VS Code extension
+# ! This file always needs to be in the root folder for the extension to work
