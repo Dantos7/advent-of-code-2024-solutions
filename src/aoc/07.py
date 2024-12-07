@@ -33,7 +33,7 @@ def parse_equations(lines: list[str]) -> list[tuple[int, list[int]]]:
 
 
 def is_valid(result: int, terms: list[int], cumulative_value: int) -> bool:
-    """Build combinations."""
+    """Recursive function checking if the equation can be valid with at least one possible operands assignment."""
     if cumulative_value > result:
         return False
     if len(terms) == 0:
@@ -46,9 +46,32 @@ def is_valid(result: int, terms: list[int], cumulative_value: int) -> bool:
 
 def second_part(instance: InstanceType, day: str) -> int:
     """Second part of day 6."""
-    lines = read_day_instance_lines(instance, day)  # noqa: F841
-    count = 0
-    return count
+    lines = read_day_instance_lines(instance, day)
+    equations = parse_equations(lines)
+    sum_results = 0
+    for result, terms in equations:
+        if is_valid_2(result, terms[1:], terms[0]):
+            sum_results += result
+
+    return sum_results
+
+
+def is_valid_2(result: int, terms: list[int], cumulative_value: int) -> bool:
+    """Recursive function checking if the equation can be valid with at least one possible operands assignment."""
+    if cumulative_value > result:
+        return False
+    if len(terms) == 0:
+        return cumulative_value == result
+    else:
+        is_valid_plus = is_valid_2(result, terms[1:], cumulative_value + terms[0])
+        is_valid_times = is_valid_2(result, terms[1:], cumulative_value * terms[0])
+        is_valid_concat = is_valid_2(result, terms[1:], concat(cumulative_value, terms[0]))
+        return is_valid_plus or is_valid_times or is_valid_concat
+
+
+def concat(a: int, b: int) -> int:
+    """Concatenate two integers."""
+    return int(str(a) + str(b))
 
 
 def main(instance: InstanceType) -> None:
