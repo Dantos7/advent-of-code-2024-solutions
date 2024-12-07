@@ -69,10 +69,57 @@ def get_valid_updates(updates: list[list[str]], rules: dict) -> list[int]:
     return valid_updates
 
 
+def get_invalid_updates(updates: list[list[str]], rules: dict) -> list[int]:
+    """Get invalid updates."""
+    valid_updates = get_valid_updates(updates, rules)
+    return [i for i in range(len(updates)) if i not in valid_updates]
+
+
 def second_part(instance: InstanceType, day: str) -> int:
     """Second part of day 5."""
-    lines = read_day_instance_lines(instance, day)  # noqa: F841
-    return 0
+    lines = read_day_instance_lines(instance, day)
+
+    i = 0
+    for i in range(len(lines)):
+        if lines[i] == "":
+            break
+
+    lines_first = lines[:i]
+    lines_second = lines[i + 1 :]
+
+    rules = parse_first_half(lines_first)
+    updates = parse_second_half(lines_second)
+    invalid_updates_idx = get_invalid_updates(updates, rules)
+    invalid_updates = [updates[i] for i in invalid_updates_idx]
+    corrected_invalid_updates = [correct_update(up, rules) for up in invalid_updates]
+
+    result = 0
+    for upd in corrected_invalid_updates:
+        middle = len(upd) // 2
+        result += int(upd[middle])
+
+    return result
+
+
+def correct_update(update: list[str], rules: dict) -> list[str]:
+    """Correct update by switching numbers in the wrong order."""
+    full_run = False
+    while not full_run:
+        max_j = len(update) - 1
+        switched = False
+        for j in range(max_j + 1):
+            number_analyzed = update[max_j - j]
+            for z in range(max_j - j):
+                if number_analyzed in rules and update[z] in rules[number_analyzed]:
+                    a = update[z]
+                    update[z] = number_analyzed
+                    update[max_j - j] = a
+                    switched = True
+                    break
+            if switched:
+                break
+        full_run = not switched
+    return update
 
 
 def main(instance: InstanceType) -> None:
