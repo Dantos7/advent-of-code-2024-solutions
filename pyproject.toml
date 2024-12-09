@@ -14,6 +14,7 @@ packages = [{ include = "aoc", from = "src" }]
 python = ">= 3.11.0, < 3.13.0"
 loguru = ">= 0.7.2, < 1.0.0"
 typer = ">= 0.15.0, < 1.0.0"
+numpy = "^2.1.3"
 
 [tool.poetry.group.dev.dependencies]
 # Code quality
