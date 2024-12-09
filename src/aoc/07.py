@@ -1,4 +1,4 @@
-"""Day 6: Guard Gallivant."""
+"""Day 7: Bridge Repair."""
 
 from pathlib import Path
 
@@ -9,7 +9,7 @@ from aoc import InstanceType, read_day_instance_lines
 
 
 def first_part(instance: InstanceType, day: str) -> int:
-    """First part of day 6."""
+    """First part of day 7."""
     lines = read_day_instance_lines(instance, day)
     equations = parse_equations(lines)
     sum_results = 0
@@ -45,7 +45,7 @@ def is_valid(result: int, terms: list[int], cumulative_value: int) -> bool:
 
 
 def second_part(instance: InstanceType, day: str) -> int:
-    """Second part of day 6."""
+    """Second part of day 7."""
     lines = read_day_instance_lines(instance, day)
     equations = parse_equations(lines)
     sum_results = 0
