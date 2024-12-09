@@ -48,8 +48,28 @@ def is_safe(report: list[int]) -> bool:
     return True
             
 
-def second_part(instance: InstanceType):
-    pass
+def second_part(instance: InstanceType, day: str):
+    with open(f"data/{instance.value}/{day}.txt") as f:
+        lines = f.readlines()
+
+    safe_reports = 0
+    for _i, line in enumerate(lines):
+        report = [int(n) for n in line.strip().split(" ")]
+        
+        if is_safe_with_problem_dampener(report):
+            safe_reports += 1
+
+    return safe_reports
+
+
+def is_safe_with_problem_dampener(report: list[int]) -> bool:
+    i = 0
+    safe = is_safe(report)
+    while i < len(report) and not safe:
+        safe = is_safe(report[:i] + report[i+1:])
+        i+=1
+
+    return safe
 
 
 def main(instance: InstanceType):
@@ -58,7 +78,8 @@ def main(instance: InstanceType):
     result = first_part(instance, day)
     print(result)
 
-    second_part(instance)
+    result = second_part(instance, day)
+    print(result)
 
 
 if __name__ == "__main__":
