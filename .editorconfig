@@ -17,5 +17,8 @@ indent_size = 4
 indent_style = space
 indent_size = 2
 
+[*.txt]
+insert_final_newline = false
+
 # ! If using VS Code, you should install the EditorConfig for VS Code extension
 # ! This file always needs to be in the root folder for the extension to work
